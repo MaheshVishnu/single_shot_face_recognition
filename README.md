@@ -15,3 +15,6 @@
   pandas
   dlib
   face_recognition modules.
+  
+  
+  Model can be trained on your own images by modifying facae_recognition_knn.py
