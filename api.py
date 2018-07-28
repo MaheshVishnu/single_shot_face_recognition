@@ -1,4 +1,6 @@
 import flask
+import pygame
+import pygame.camera
 import os, shutil
 import PIL
 import sys
@@ -63,6 +65,17 @@ def take_picture(port = 0):
 		cv2.imwrite(filename,im)
 		del(camera)'''
 		return render_template('index.html', label = "picture captured")
+@app.route('/predict_capture_pygame', methods = ['POST'])
+def predict_capture_pygame() :
+	if request.method == 'POST' :
+		pygame.camera.init()
+		camera = pygame.camera.Camera('/dev/video0', (800, 600))
+		camera.start()
+		for i in range(0, 30) :
+			temp = camera.get_image()
+		img = camera.get_image()
+		pygame.image.save(img, 'image1.jpg')
+		camera.stop()
 @app.route('/train_snap', methods = ['POST'])
 def train_capture() :
 	if request.method == 'POST' :
@@ -86,6 +99,17 @@ def train_capture() :
 		cv2.imwrite(filename,im)
 		del(camera)'''
 		return render_template('index.html', label = "picture captured")
+@app.route('/train_capture_pygame', methods = ['POST'])
+def train_capture_pygame() :
+	if request.method == 'POST' :
+		pygame.camera.init()
+		camera = pygame.camera.Camera('/dev/video0', (800, 600))
+		camera.start()
+		for i in range(0, 30) :
+			temp = camera.get_image()
+		img = camera.get_image()
+		pygame.image.save(img, 'photos_temp/image1.jpg')
+		camera.stop()
 @app.route('/train', methods = ['POST'])
 def train_image() :
 	if request.method == 'POST' :
@@ -126,7 +150,6 @@ def train(train_dir='/home/sreemahavishnu/Desktop/programming/courses/udacity/de
     if model_save_path is not None:
         with open(model_save_path, 'wb') as f:
             pickle.dump(knn_clf, f)
-
     return knn_clf
 if __name__ == '__main__':
 	app.secret_key = 'key'
