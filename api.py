@@ -115,7 +115,7 @@ def train_image() :
 	if request.method == 'POST' :
 		text = request.form['name']
 		train_path = '/home/sreemahavishnu/Desktop/programming/courses/udacity/deep_learning/facial_recognition/10k_small/dynamic_train/'
-		src = '/home//sreemahavishnu/Desktop/programming/courses/udacity/deep_learning/facial_recognition/photos_temp/image1.jpg'
+		src = '/home/sreemahavishnu/Desktop/programming/courses/udacity/deep_learning/facial_recognition/photos_temp/image1.jpg'
 		os.makedirs(train_path+text)
 		shutil.copy2(src, train_path+text+'/'+'image1.jpg')
 		classifier = train(train_path, model_save_path="trained_knn_model.clf", n_neighbors=2)
